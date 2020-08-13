@@ -1,0 +1,37 @@
+diff -Naur android-ndk-r21/build/tools/make_standalone_toolchain.py android-ndk-r21-new/build/tools/make_standalone_toolchain.py
+--- android-ndk-r21/build/tools/make_standalone_toolchain.py	2018-10-11 12:49:38.000000000 +0200
++++ android-ndk-r21-new/build/tools/make_standalone_toolchain.py	2018-11-20 21:55:52.689991420 +0100
+@@ -30,6 +30,7 @@
+ import sys
+ import tempfile
+ import textwrap
++import subprocess
+ 
+ 
+ THIS_DIR = os.path.realpath(os.path.dirname(__file__))
+@@ -205,6 +206,7 @@
+                     '{}clang{}.cmd'.format(triple_prefix, pp_suffix))
+                 with open(clangbat_path, 'w') as clangbat:
+                     clangbat.write(clangbat_text)
++    subprocess.check_call(["chmod", "-R", "+w", install_dir])
+ 
+ 
+ def replace_gcc_wrappers(install_path, triple, is_windows):
+@@ -218,6 +220,8 @@
+     clangpp = os.path.join(install_path, 'bin', 'clang++' + cmd)
+     shutil.copy2(clangpp, gpp)
+ 
++    subprocess.check_call(["chmod", "-R", "+w", install_path])
++
+ 
+ def create_toolchain(install_path, arch, api, toolchain_path, host_tag):
+     """Create a standalone toolchain."""
+@@ -234,6 +238,8 @@
+     gdbserver_install = os.path.join(install_path, 'share', 'gdbserver')
+     shutil.copytree(gdbserver_path, gdbserver_install)
+ 
++    subprocess.check_call(["chmod", "-R", "+w", install_path])
++
+ 
+ def warn_unnecessary(arch, api, host_tag):
+     """Emits a warning that this script is no longer needed."""

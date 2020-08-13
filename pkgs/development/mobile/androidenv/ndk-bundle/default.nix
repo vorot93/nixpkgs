@@ -2,6 +2,10 @@
 
 let
   runtime_paths = lib.makeBinPath [ pkgs.coreutils pkgs.file pkgs.findutils pkgs.gawk pkgs.gnugrep pkgs.gnused pkgs.jdk pkgs.python3 pkgs.which ] + ":${platform-tools}/platform-tools";
+
+  toolchainPatch = if builtins.compareVersions (lib.getVersion package) "21" < 0
+                   then ./make_standalone_toolchain.py_21.patch
+                   else ./make_standalone_toolchain.py_18.patch;
 in
 deployAndroidPackage {
   inherit package os;
@@ -11,7 +15,7 @@ deployAndroidPackage {
     patchShebangs .
 
     patch -p1 \
-      --no-backup-if-mismatch < ${./make_standalone_toolchain.py_18.patch}
+      --no-backup-if-mismatch < ${toolchainPatch}
     wrapProgram $(pwd)/build/tools/make_standalone_toolchain.py --prefix PATH : "${runtime_paths}"
 
     # TODO: allow this stuff
