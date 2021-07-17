@@ -4674,6 +4674,8 @@ in {
 
   names = callPackage ../development/python-modules/names { };
 
+  nampa = callPackage ../development/python-modules/nampa { };
+
   nanoleaf = callPackage ../development/python-modules/nanoleaf { };
 
   nanomsg-python = callPackage ../development/python-modules/nanomsg-python {
@@ -4986,6 +4988,8 @@ in {
   opensensemap-api = callPackage ../development/python-modules/opensensemap-api { };
 
   openshift = callPackage ../development/python-modules/openshift { };
+
+  opensimplex = callPackage ../development/python-modules/opensimplex { };
 
   opentimestamps = callPackage ../development/python-modules/opentimestamps { };
 
